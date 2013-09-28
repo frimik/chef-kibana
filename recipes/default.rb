@@ -38,6 +38,8 @@ directory node['kibana']['installdir'] do
   mode "0755"
 end
 
+include_recipe "kibana::#{node['kibana']['webserver']}"
+
 git "#{node['kibana']['installdir']}/#{node['kibana']['branch']}" do
   repository node['kibana']['repo']
   reference node['kibana']['branch']
@@ -61,4 +63,3 @@ link "#{node['kibana']['installdir']}/current/dashboards/default.json" do
   only_if { !File::symlink?("#{node['kibana']['installdir']}/current/dashboard/default.json") }
 end
 
-include_recipe "kibana::#{node['kibana']['webserver']}"
