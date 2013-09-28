@@ -33,12 +33,12 @@ else
   kibana_user = node['kibana']['user']
 end
 
+include_recipe "kibana::#{node['kibana']['webserver']}"
+
 directory node['kibana']['installdir'] do
   owner kibana_user
   mode "0755"
 end
-
-include_recipe "kibana::#{node['kibana']['webserver']}"
 
 git "#{node['kibana']['installdir']}/#{node['kibana']['branch']}" do
   repository node['kibana']['repo']
